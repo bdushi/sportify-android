@@ -4,6 +4,7 @@ plugins {
     id 'com.google.protobuf' version '0.9.4'
     id 'dagger.hilt.android.plugin'
     id 'com.google.devtools.ksp'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {

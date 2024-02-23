@@ -1,6 +1,5 @@
 package al.bruno.sportify.di
 
-import al.bruno.sportify.common.URL
 import al.bruno.sportify.data.source.remote.service.AuthService
 import al.bruno.sportify.data.source.remote.service.LeaveService
 import al.bruno.sportify.data.source.remote.service.LeaveTypesService
@@ -28,7 +27,8 @@ class NetworkModule {
     fun providerRetrofit(authInterceptor: AuthInterceptor, authorizationInterceptor: AuthorizationInterceptor): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl(URL)
+            .baseUrl("http://192.168.1.0:8008/")
+//            .baseUrl(BuildConfig.HOST_NAME)
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(authInterceptor)
