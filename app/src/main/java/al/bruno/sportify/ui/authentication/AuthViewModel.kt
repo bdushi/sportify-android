@@ -1,4 +1,4 @@
-package al.bruno.sportify.ui.signin
+package al.bruno.sportify.ui.authentication
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +42,21 @@ class AuthViewModel @Inject constructor(
     fun logout() {
         viewModelScope.launch {
             authRepository.clear()
+        }
+    }
+
+    fun validateToken(token: String) {
+        viewModelScope.launch {
+            runCatching {
+                authRepository.validateToken(token)
+            }.onSuccess {
+                if(it.isSuccessful) {
+                    val tok = it.body().toString()
+                    authRepository.token(tok)
+                }
+            }.onFailure {
+
+            }
         }
     }
 

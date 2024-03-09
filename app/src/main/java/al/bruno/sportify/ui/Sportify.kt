@@ -11,11 +11,10 @@ import al.bruno.sportify.nav.Destinations
 import al.bruno.sportify.ui.event.AddLeave
 import al.bruno.sportify.ui.home.Home
 import al.bruno.sportify.ui.home.EventViewModel
-import al.bruno.sportify.ui.signin.AuthViewModel
+import al.bruno.sportify.ui.authentication.AuthViewModel
 
 @Composable
-fun AnnualLeave(
-
+fun Sportify(
     datePicker: () -> Unit,
     eventViewModel: EventViewModel,
     authViewModel: AuthViewModel

@@ -8,7 +8,7 @@ object Destinations {
     const val Home = "home"
     const val AddLeave = "addLeave"
     const val SignIn = "signIn"
-    const val SignUp = "signUp"
+    const val Authentication = "authentication"
     const val LeaveDetail = "leaveDetail"
 
     object LeaveDetailArgs {

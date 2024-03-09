@@ -1,62 +1,95 @@
 package al.bruno.sportify.ui
 
-import android.os.Bundle
-import android.os.Parcel
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.ExperimentalAnimationApi
+import al.bruno.sportify.ui.authentication.AuthViewModel
+import al.bruno.sportify.ui.authentication.Authentication
 import al.bruno.sportify.ui.home.EventViewModel
-import al.bruno.sportify.ui.signin.AuthViewModel
-import al.bruno.sportify.ui.signin.SignIn
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
+import android.content.IntentSender
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.compose.material3.ExperimentalMaterial3Api
+import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
+
     private val authViewModel: AuthViewModel by viewModels()
     private val eventViewModel: EventViewModel by viewModels()
+    private val oneTapClient: SignInClient by lazy {
+        Identity.getSignInClient(this)
+    }
+    private val request: GetSignInIntentRequest by lazy {
+        GetSignInIntentRequest.builder()
+            .setServerClientId("651311705711-4ef9uig8ie1kh6jpfl01dedhi884b55h.apps.googleusercontent.com")
+            .build()
+    }
 
-    @ExperimentalAnimationApi
+    private val handler =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            try {
+                val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
+                credential.googleIdToken?.let { it1 -> authViewModel.validateToken(it1) }
+                //authInterceptor.token = credential.googleIdToken
+                //authViewModel.verification()
+//                setContent {
+//                    MainScreenView()
+//                }
+            } catch (ex: Exception) {
+                Snackbar
+                    .make(
+                        findViewById(android.R.id.content),
+                        "Error ${ex.message} ${ex.cause}",
+                        Snackbar.LENGTH_SHORT
+                    )
+                    .show()
+            }
+        }
+
+    @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authViewModel.auth()
         authViewModel.success.observe(this) {
             if (it) {
-                setContent { AnnualLeave({ showDatePicker() }, eventViewModel, authViewModel) }
+                setContent {
+                    Sportify({
+
+                    }, eventViewModel, authViewModel)
+                }
             } else {
-                setContent { SignIn(authViewModel) }
+                setContent {
+                    Authentication(authViewModel) {
+                        oneTapClient
+                            .getSignInIntent(request)
+                            .addOnSuccessListener { result ->
+                                try {
+                                    handler.launch(
+                                        IntentSenderRequest.Builder(
+                                            result.intentSender
+                                        ).build()
+                                    )
+                                } catch (e: IntentSender.SendIntentException) {
+                                    Log.e("TAG", "Google Sign-in failed")
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(
+                                    "TAG",
+                                    "Google Sign-in failed",
+                                    e
+                                )
+                            }
+                    }
+                }
             }
-        }
-    }
-
-    private fun showDatePicker() {
-        val constraints =  CalendarConstraints
-            .Builder()
-            .setValidator(object : CalendarConstraints.DateValidator {
-                override fun describeContents(): Int {
-                    TODO("Not yet implemented")
-                }
-
-                override fun writeToParcel(p0: Parcel, p1: Int) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun isValid(date: Long): Boolean {
-                    return true
-                }
-
-            })
-            .build()
-        val picker = MaterialDatePicker
-            .Builder
-            .datePicker()
-            .setCalendarConstraints(constraints)
-            .build()
-        picker.show(supportFragmentManager, picker.toString())
-        picker.addOnPositiveButtonClickListener {
-            eventViewModel.startDate = picker.headerText
         }
     }
 }

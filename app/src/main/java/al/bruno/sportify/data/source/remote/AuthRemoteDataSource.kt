@@ -12,6 +12,10 @@ class AuthRemoteDataSource @Inject constructor(private val authService: AuthServ
         return authService.auth(username = username, password = password)
     }
 
+    override suspend fun validateToken(token: String): Response<ResponseBody> {
+        return authService.validateToken(token)
+    }
+
     override fun token(): Flow<String?> {
         TODO("Not yet implemented")
     }

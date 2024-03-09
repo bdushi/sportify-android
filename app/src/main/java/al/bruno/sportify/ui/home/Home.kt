@@ -4,7 +4,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import al.bruno.sportify.ui.signin.AuthViewModel
+import al.bruno.sportify.ui.authentication.AuthViewModel
 
 @Composable
 fun Home(

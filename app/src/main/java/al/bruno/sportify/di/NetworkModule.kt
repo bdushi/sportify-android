@@ -24,10 +24,13 @@ import javax.inject.Singleton
 class NetworkModule {
     @Provides
     @Singleton
-    fun providerRetrofit(authInterceptor: AuthInterceptor, authorizationInterceptor: AuthorizationInterceptor): Retrofit {
+    fun providerRetrofit(
+        authInterceptor: AuthInterceptor,
+        authorizationInterceptor: AuthorizationInterceptor
+    ): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.1.0:8008/")
+            .baseUrl("http://192.168.1.4:8080/")
 //            .baseUrl(BuildConfig.HOST_NAME)
             .client(
                 OkHttpClient.Builder()

@@ -17,6 +17,10 @@ class AuthLocalDataSource @Inject constructor(private val dataStore: DataStore<P
         TODO("Not yet implemented")
     }
 
+    override suspend fun validateToken(token: String): Response<ResponseBody> {
+        TODO("Not yet implemented")
+    }
+
     override fun token(): Flow<String?> {
         return dataStore.data.map {
             it[stringPreferencesKey(TOKEN)]

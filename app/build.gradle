@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.protobuf' version '0.9.4'
-    id 'dagger.hilt.android.plugin'
     id 'com.google.devtools.ksp'
+    id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.protobuf' version '0.9.4'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
@@ -53,63 +54,51 @@ android {
 }
 
 dependencies {
-//    implementation platform(libs.compose.bom)
-//    implementation libs.activity.compose
-//    implementation libs.ui.material
-//    implementation libs.ui
-//    implementation libs.ui.graphics
-//    implementation libs.ui.tooling.preview
-//    implementation libs.material3
-//    implementation libs.material.icons
-//    implementation libs.navigation
-//
-//    implementation libs.lifecycle
-//    implementation libs.constraintlayout
-//    implementation libs.material
-//    implementation libs.navigation.ui
-//    implementation libs.navigation.fragment
+    implementation libs.activity.compose
+    implementation libs.core.ktx
+    implementation libs.lifecycle.runtime
+    implementation libs.android.material
 
-    implementation platform('androidx.compose:compose-bom:2024.02.01')
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
-    implementation 'androidx.activity:activity-compose:1.8.2'
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.material:material-icons-extended'
-    implementation 'androidx.compose.material:material'
-    implementation 'androidx.compose.foundation:foundation'
+    // compose
+    implementation platform(libs.compose.bom)
+    implementation libs.ui
+    implementation libs.ui.graphics
+    implementation libs.ui.tooling
+    implementation libs.ui.tooling.preview
+    implementation libs.material3
+    implementation libs.ui.material
+    implementation libs.material.icons
+    implementation libs.foundation
 
-    implementation 'com.google.android.material:material:1.11.0'
-
-    implementation 'androidx.navigation:navigation-compose:2.7.7'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
-
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation libs.navigation
+    implementation libs.navigation.ui
     //
-    implementation "androidx.paging:paging-compose:3.2.1"
+    implementation libs.paging.compose
 
-    implementation 'androidx.datastore:datastore-core:1.0.0'
-    implementation 'androidx.datastore:datastore-preferences:1.0.0'
-    implementation 'com.google.protobuf:protobuf-javalite:3.25.3'
+    implementation libs.datastore.core
+    implementation libs.preference.datastore
+    implementation libs.protobuf
 
     // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    implementation libs.retrofit
+    implementation libs.converter.gson
+    implementation libs.logging
+
+    //
+    implementation platform(libs.firebase.bom)
+    implementation libs.analytics
 
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.50'
-    ksp 'com.google.dagger:hilt-android-compiler:2.50'
-//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    implementation libs.hilt.android
+    ksp libs.hilt.android.compiler
+    // work manager
 //    ksp "androidx.hilt:hilt-compiler:1.2.0"
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation libs.play.services.auth
+
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.espresso.core
 }
 
 protobuf {
