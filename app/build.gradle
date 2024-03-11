@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
-    id 'dagger.hilt.android.plugin'
     id 'com.google.protobuf' version '0.9.4'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
@@ -88,11 +87,10 @@ dependencies {
     implementation platform(libs.firebase.bom)
     implementation libs.analytics
 
-    // Hilt
-    implementation libs.hilt.android
-    ksp libs.hilt.android.compiler
-    // work manager
-//    ksp "androidx.hilt:hilt-compiler:1.2.0"
+    // koin
+    implementation platform(libs.koin.bom)
+    implementation libs.koin.android
+    implementation libs.koin.compose
 
     implementation libs.play.services.auth
 

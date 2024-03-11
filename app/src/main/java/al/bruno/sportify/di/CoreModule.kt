@@ -4,17 +4,15 @@ import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
 import al.bruno.sportify.common.TOKEN
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-class CoreModule {
-    @Provides
-    fun providesDataStore(@ApplicationContext app: Context) =
-        PreferenceDataStoreFactory.create { app.preferencesDataStoreFile(TOKEN) }
+
+val preferencesDataStore = module {
+    single<DataStore<Preferences>> { providesDataStore(androidContext()) }
 }
+fun providesDataStore(app: Context) =
+    PreferenceDataStoreFactory.create { app.preferencesDataStoreFile(TOKEN) }
 

@@ -8,25 +8,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import al.bruno.sportify.common.Util.format
-import al.bruno.sportify.model.Leave
+import al.bruno.sportify.model.Event
 import al.bruno.sportify.R
 
 @Composable
-fun LeaveItem(leave: Leave) {
+fun LeaveItem(event: Event) {
     Card(
         modifier = Modifier.padding(4.dp)
     ) {
         Column(
             modifier = Modifier.padding(4.dp)
         ) {
-            LeaveCell(title = stringResource(id = R.string.requested_by), value = leave.requestedBy.username)
-            LeaveCell(title = stringResource(id = R.string.requested_date), value = format(leave.createDate))
-            LeaveCell(title = stringResource(id = R.string.start_date), value = format(leave.startDate))
-            LeaveCell(title = stringResource(id = R.string.end_date), value = format(leave.endDate))
-            LeaveCell(title = stringResource(id = R.string.description), value = leave.description)
-            LeaveCell(title = stringResource(id = R.string.comment), value = leave.comment)
-            LeaveCell(title = stringResource(id = R.string.leave_description), value = leave.leaveTypes.description)
-            LeaveCell(title = stringResource(id = R.string.leave_type), value = leave.leaveTypes.types)
+            LeaveCell(title = stringResource(id = R.string.requested_by), value = event.created.username)
+            LeaveCell(title = stringResource(id = R.string.requested_date), value = format(event.createDate))
+            LeaveCell(title = stringResource(id = R.string.start_date), value = format(event.startDate))
+            LeaveCell(title = stringResource(id = R.string.end_date), value = format(event.endDate))
+            LeaveCell(title = stringResource(id = R.string.description), value = event.description)
+            LeaveCell(title = stringResource(id = R.string.comment), value = event.title)
+            LeaveCell(title = stringResource(id = R.string.leave_description), value = event.eventTypes.description)
+            LeaveCell(title = stringResource(id = R.string.leave_type), value = event.eventTypes.types)
         }
     }
 }

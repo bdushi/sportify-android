@@ -9,10 +9,10 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface LeaveService {
-    @GET("/leave")
-    suspend fun leave(@Query("search") search: String, @Query("page") page: Int , @Query("size") size: Int) : Response<Page>
+interface EventService {
+    @GET("/event")
+    suspend fun eventPage(@Query("page") page: Int , @Query("size") size: Int) : Page?
 
-    @POST("/leave/request")
+    @POST("/event")
     suspend fun leave(@Body leaveDto: LeaveDto) : Response<ResponseBody>
 }

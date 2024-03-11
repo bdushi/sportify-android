@@ -1,4 +1,6 @@
 package al.bruno.sportify.data.source
 
-interface UserDataSource {
+import al.bruno.sportify.data.source.local.UserLocalDataSource
+
+class UserDataSource : UserLocalDataSource {
 }

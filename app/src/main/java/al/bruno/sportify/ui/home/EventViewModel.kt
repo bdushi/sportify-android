@@ -9,54 +9,43 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import al.bruno.sportify.data.source.LeaveRepository
+import al.bruno.sportify.data.source.EventRepository
 import al.bruno.sportify.data.source.LeaveTypesRepository
 import al.bruno.sportify.interceptor.ErrorHandler
-import al.bruno.sportify.model.Leave
-import al.bruno.sportify.model.LeaveTypes
+import al.bruno.sportify.model.Event
+import al.bruno.sportify.model.EventTypes
 import al.bruno.sportify.model.dto.LeaveDto
 import al.bruno.sportify.page.LeavePageSource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.lang.Exception
-import javax.inject.Inject
 
-@HiltViewModel
-class EventViewModel @Inject constructor(
-        private val leaveRepository: LeaveRepository,
-        private val leaveTypesRepository: LeaveTypesRepository,
-        private val errorHandler: ErrorHandler
+class EventViewModel(
+    private val eventRepository: EventRepository,
+    private val leaveTypesRepository: LeaveTypesRepository,
+    private val errorHandler: ErrorHandler
 ): ViewModel() {
 
-    var leaves: List<Leave> by mutableStateOf(listOf())
+    var leaves: List<Event> by mutableStateOf(listOf())
         private set
 
-    var leaveTypes: List<LeaveTypes> by mutableStateOf(listOf())
+    var eventTypes: List<EventTypes> by mutableStateOf(listOf())
         private set
 
-
-    var startDate:String by mutableStateOf("")
-
-    val pagedLeaves: Flow<PagingData<Leave>> = Pager(
+    val pagedLeaves: Flow<PagingData<Event>> = Pager(
         PagingConfig(
             pageSize = 10,
             enablePlaceholders = true
         )
     ) {
-        LeavePageSource(leaveRepository = leaveRepository)
+        LeavePageSource(eventRepository = eventRepository)
     }.flow
 
     fun leave() {
         viewModelScope.launch {
             try {
-                val response = leaveRepository.leave("", 0, 10)
-                if(response.isSuccessful) {
-                    response.body()?.let {
-                        leaves = it.leave
-                    }
-                } else {
-                    Log.d(EventViewModel::class.java.name, errorHandler.parseError(response).message.toString())
+                eventRepository.eventPage( 0, 10)?.let {
+                    leaves = it.event
                 }
             } catch (ex: Exception) {
                 Log.d(EventViewModel::class.java.name, ex.message.toString())
@@ -70,7 +59,7 @@ class EventViewModel @Inject constructor(
                 val response = leaveTypesRepository.leaveTypes()
                 if(response.isSuccessful) {
                     response.body()?.let {
-                        leaveTypes = it
+                        eventTypes = it
                     }
                 } else {
                     Log.d(EventViewModel::class.java.name, errorHandler.parseError(response).message.toString())
@@ -84,7 +73,7 @@ class EventViewModel @Inject constructor(
     fun leave(leaveDto: LeaveDto) {
         viewModelScope.launch {
             try {
-                val response = leaveRepository.leave(leaveDto)
+                val response = eventRepository.leave(leaveDto)
                 if(response.isSuccessful) {
                     Log.d(EventViewModel::class.java.name, errorHandler.parseError(response).message.toString())
                 } else {

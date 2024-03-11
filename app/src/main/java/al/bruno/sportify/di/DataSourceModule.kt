@@ -1,29 +1,20 @@
 package al.bruno.sportify.di
 
 import al.bruno.sportify.data.source.AuthDataSource
-import al.bruno.sportify.data.source.LeaveDataSource
+import al.bruno.sportify.data.source.AuthRepository
+import al.bruno.sportify.data.source.EventDataSource
+import al.bruno.sportify.data.source.EventRepository
 import al.bruno.sportify.data.source.LeaveTypesDataSource
-import al.bruno.sportify.data.source.local.AuthLocalDataSource
-import al.bruno.sportify.data.source.remote.AuthRemoteDataSource
-import al.bruno.sportify.data.source.remote.LeaveRemoteDataSource
-import al.bruno.sportify.data.source.remote.LeaveTypesRemoteDataSource
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import al.bruno.sportify.data.source.LeaveTypesRepository
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DataSourceModule {
-    @Binds
-    abstract fun provideAuthRemoteDataSource(authDataSource: AuthRemoteDataSource): AuthDataSource
+val dataSource = module {
+    single { AuthDataSource(get(), get()) }
+    single { AuthRepository(get()) }
 
-    @Binds
-    abstract fun provideAuthLocalDataSource(authDataSource: AuthLocalDataSource): AuthDataSource
+    single { EventDataSource(get()) }
+    single { EventRepository(get()) }
 
-    @Binds
-    abstract fun provideLeaveRemoteDataSource(leaveRemoteDataSource: LeaveRemoteDataSource): LeaveDataSource
-
-    @Binds
-    abstract fun provideLeaveTypesRemoteDataSource(leaveTypesRemoteDataSource: LeaveTypesRemoteDataSource): LeaveTypesDataSource
+    single { LeaveTypesDataSource(get()) }
+    single { LeaveTypesRepository(get()) }
 }

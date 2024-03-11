@@ -9,12 +9,10 @@ import androidx.lifecycle.viewModelScope
 import al.bruno.sportify.data.source.AuthRepository
 import al.bruno.sportify.interceptor.AuthInterceptor
 import al.bruno.sportify.interceptor.ErrorHandler
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val authInterceptor: AuthInterceptor,

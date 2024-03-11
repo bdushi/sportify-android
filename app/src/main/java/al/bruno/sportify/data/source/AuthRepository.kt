@@ -1,34 +1,30 @@
 package al.bruno.sportify.data.source
 
-import al.bruno.sportify.data.source.local.AuthLocalDataSource
-import al.bruno.sportify.data.source.remote.AuthRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 import retrofit2.Response
-import javax.inject.Inject
 
-class AuthRepository @Inject constructor(
-    private val authRemoteDataSource: AuthRemoteDataSource,
-    private val authLocalDataSource: AuthLocalDataSource
+class AuthRepository(
+    private val authDataSource: AuthDataSource
 ) {
 
     suspend fun auth(username: String, password: String): Response<ResponseBody> {
-        return authRemoteDataSource.auth(username = username, password = password)
+        return authDataSource.auth(username = username, password = password)
     }
 
     suspend fun validateToken(token: String): Response<ResponseBody> {
-        return authRemoteDataSource.validateToken(token)
+        return authDataSource.validateToken(token)
     }
 
     fun token(): Flow<String?> {
-        return authLocalDataSource.token()
+        return authDataSource.token()
     }
 
     suspend fun token(token: String) {
-        return authLocalDataSource.token(token = token)
+        return authDataSource.token(token = token)
     }
 
     suspend fun clear() {
-        return authLocalDataSource.clear()
+        return authDataSource.clear()
     }
 }

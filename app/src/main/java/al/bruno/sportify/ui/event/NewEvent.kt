@@ -1,6 +1,6 @@
 package al.bruno.sportify.ui.event
 
-import al.bruno.sportify.model.LeaveTypes
+import al.bruno.sportify.model.EventTypes
 import al.bruno.sportify.ui.home.EventViewModel
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,7 +22,7 @@ fun AddLeave(
     var description by rememberSaveable { mutableStateOf("") }
     var comment by rememberSaveable { mutableStateOf("") }
     var startDate by rememberSaveable { mutableStateOf("") }
-    var leaveType by rememberSaveable { mutableStateOf(LeaveTypes(1, "", "")) }
+    var leaveType by rememberSaveable { mutableStateOf(EventTypes(1, "", "")) }
 
     var showMenu by remember { mutableStateOf( false ) }
     var selectedIndex by remember { mutableStateOf(0) }

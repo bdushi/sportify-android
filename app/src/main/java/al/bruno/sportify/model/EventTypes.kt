@@ -3,7 +3,7 @@ package al.bruno.sportify.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class LeaveTypes (
+data class EventTypes (
         val id:Long,
         val types: String,
         val description: String
@@ -24,12 +24,12 @@ data class LeaveTypes (
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<LeaveTypes> {
-        override fun createFromParcel(parcel: Parcel): LeaveTypes {
-            return LeaveTypes(parcel)
+    companion object CREATOR : Parcelable.Creator<EventTypes> {
+        override fun createFromParcel(parcel: Parcel): EventTypes {
+            return EventTypes(parcel)
         }
 
-        override fun newArray(size: Int): Array<LeaveTypes?> {
+        override fun newArray(size: Int): Array<EventTypes?> {
             return arrayOfNulls(size)
         }
     }

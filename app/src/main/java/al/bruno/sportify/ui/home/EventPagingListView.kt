@@ -14,15 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import al.bruno.sportify.model.Leave
+import al.bruno.sportify.model.Event
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun LeavePagingListView(leaves: Flow<PagingData<Leave>>) {
+fun LeavePagingListView(leaves: Flow<PagingData<Event>>) {
     val leavesItems = leaves.collectAsLazyPagingItems()
     LazyColumn() {
         items(leavesItems.itemCount) { item ->
-            leavesItems[item]?.let { LeaveItem(leave = it) }
+            leavesItems[item]?.let { LeaveItem(event = it) }
         }
         leavesItems.apply {
             // modifier = Modifier.fillParentMaxSize()
