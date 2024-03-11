@@ -1,6 +1,6 @@
 package al.bruno.sportify.ui.event
 
-import al.bruno.sportify.model.EventTypes
+import al.bruno.sportify.model.EventType
 import al.bruno.sportify.ui.home.EventViewModel
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import al.bruno.sportify.R
+import java.time.OffsetDateTime
 
 @Composable
 fun AddLeave(
@@ -22,10 +23,10 @@ fun AddLeave(
     var description by rememberSaveable { mutableStateOf("") }
     var comment by rememberSaveable { mutableStateOf("") }
     var startDate by rememberSaveable { mutableStateOf("") }
-    var leaveType by rememberSaveable { mutableStateOf(EventTypes(1, "", "")) }
+    var leaveType by rememberSaveable { mutableStateOf(EventType("test", "Test", "Test", "Test", true, OffsetDateTime.now(), OffsetDateTime.now())) }
 
     var showMenu by remember { mutableStateOf( false ) }
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
     Scaffold(
         topBar = {
             TopAppBar(

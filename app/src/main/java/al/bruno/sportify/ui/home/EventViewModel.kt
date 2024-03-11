@@ -13,7 +13,7 @@ import al.bruno.sportify.data.source.EventRepository
 import al.bruno.sportify.data.source.LeaveTypesRepository
 import al.bruno.sportify.interceptor.ErrorHandler
 import al.bruno.sportify.model.Event
-import al.bruno.sportify.model.EventTypes
+import al.bruno.sportify.model.EventType
 import al.bruno.sportify.model.dto.LeaveDto
 import al.bruno.sportify.page.LeavePageSource
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +29,7 @@ class EventViewModel(
     var leaves: List<Event> by mutableStateOf(listOf())
         private set
 
-    var eventTypes: List<EventTypes> by mutableStateOf(listOf())
+    var eventTypes: List<EventType> by mutableStateOf(listOf())
         private set
 
     val pagedLeaves: Flow<PagingData<Event>> = Pager(

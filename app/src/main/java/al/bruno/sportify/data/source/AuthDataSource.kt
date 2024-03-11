@@ -22,9 +22,7 @@ class AuthDataSource(
         return authService.auth(username, password)
     }
 
-    override suspend fun validateToken(token: String): Response<ResponseBody> {
-        return authService.validateToken(token)
-    }
+    override suspend fun validateToken(token: String) = authService.validateToken(token)
 
     override fun token(): Flow<String?> {
         return dataStore.data.map {

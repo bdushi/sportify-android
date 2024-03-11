@@ -35,11 +35,6 @@ class MainActivity : ComponentActivity() {
             try {
                 val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
                 credential.googleIdToken?.let { it1 -> authViewModel.validateToken(it1) }
-                //authInterceptor.token = credential.googleIdToken
-                //authViewModel.verification()
-//                setContent {
-//                    MainScreenView()
-//                }
             } catch (ex: Exception) {
                 Snackbar
                     .make(
@@ -68,22 +63,20 @@ class MainActivity : ComponentActivity() {
                         oneTapClient
                             .getSignInIntent(request)
                             .addOnSuccessListener { result ->
-                                try {
-                                    handler.launch(
-                                        IntentSenderRequest.Builder(
-                                            result.intentSender
-                                        ).build()
-                                    )
-                                } catch (e: IntentSender.SendIntentException) {
-                                    Log.e("TAG", "Google Sign-in failed")
-                                }
+                                handler.launch(
+                                    IntentSenderRequest.Builder(
+                                        result.intentSender
+                                    ).build()
+                                )
                             }
                             .addOnFailureListener { e ->
-                                Log.e(
-                                    "TAG",
-                                    "Google Sign-in failed",
-                                    e
-                                )
+                                Snackbar
+                                    .make(
+                                        findViewById(android.R.id.content),
+                                        "Google Sign-in failed ${e.message}",
+                                        Snackbar.LENGTH_SHORT
+                                    )
+                                    .show()
                             }
                     }
                 }

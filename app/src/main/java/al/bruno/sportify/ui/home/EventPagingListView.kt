@@ -20,14 +20,13 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun LeavePagingListView(leaves: Flow<PagingData<Event>>) {
     val leavesItems = leaves.collectAsLazyPagingItems()
-    LazyColumn() {
+    LazyColumn {
         items(leavesItems.itemCount) { item ->
             leavesItems[item]?.let { LeaveItem(event = it) }
         }
         leavesItems.apply {
             // modifier = Modifier.fillParentMaxSize()
             when {
-                // Data is loading for the first time
                 loadState.refresh is LoadState.Loading -> {
                     item { LoadingView() }
                 }

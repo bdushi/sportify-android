@@ -5,5 +5,5 @@ import retrofit2.Response
 
 interface AuthRemoteDataSource {
     suspend fun auth(username: String, password: String): Response<ResponseBody>
-    suspend fun validateToken(token: String): Response<ResponseBody>
+    suspend fun validateToken(token: String): String?
 }

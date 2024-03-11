@@ -15,7 +15,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.time.LocalDateTime
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.time.OffsetDateTime
 
 val networkModule = module {
     single<AuthInterceptor> { AuthInterceptor() }
@@ -31,7 +32,7 @@ fun providerRetrofit(
     authInterceptor: AuthInterceptor
 ): Retrofit = Retrofit
     .Builder()
-    .baseUrl("http://192.168.1.29:8080/")
+    .baseUrl("http://192.168.1.4:8080/")
 //            .baseUrl(BuildConfig.HOST_NAME)
     .client(
         OkHttpClient.Builder()
@@ -40,6 +41,7 @@ fun providerRetrofit(
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     )
+    .addConverterFactory(ScalarsConverterFactory.create())
     .addConverterFactory(
         GsonConverterFactory.create(
             GsonBuilder()
@@ -53,7 +55,7 @@ fun providerRetrofit(
                     }
 
                 })
-                .registerTypeAdapter(LocalDateTime::class.java, DateTimeSerializer())
+                .registerTypeAdapter(OffsetDateTime::class.java, DateTimeSerializer())
                 .setLenient()
                 .setPrettyPrinting()
                 .create()

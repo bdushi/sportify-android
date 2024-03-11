@@ -48,12 +48,14 @@ class AuthViewModel @Inject constructor(
             runCatching {
                 authRepository.validateToken(token)
             }.onSuccess {
-                if(it.isSuccessful) {
-                    val tok = it.body().toString()
-                    authRepository.token(tok)
+                if(it != null) {
+                    authInterceptor.token = it
+                    authRepository.token(it)
+                } else {
+                    Log.e("TAG", "Token validation Failed")
                 }
             }.onFailure {
-
+                Log.e("TAG", "Server error ${it.message}")
             }
         }
     }
@@ -65,7 +67,7 @@ class AuthViewModel @Inject constructor(
                 loading.value = false
                 val response = authRepository.auth(username = username, password = password)
                 if(response.isSuccessful) {
-                    val token = response.headers()["Authorization"]
+                    val token = response.body().toString()
                     if(token != null) {
                         authInterceptor.token = token
                         authRepository.token(token = token)

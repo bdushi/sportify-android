@@ -2,11 +2,12 @@ package al.bruno.sportify.model
 
 import java.time.OffsetDateTime
 
-data class Authority(
+data class EventType(
     val id: String,
-    val authority: String,
+    val code: String,
+    val name: String,
     val description: String,
-    val enabled: Boolean = true,
+    val enabled: Boolean,
     var dateCreated: OffsetDateTime,
-    var lastUpdated: OffsetDateTime,
+    var lastUpdated: OffsetDateTime
 )

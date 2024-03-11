@@ -12,9 +12,7 @@ class AuthRepository(
         return authDataSource.auth(username = username, password = password)
     }
 
-    suspend fun validateToken(token: String): Response<ResponseBody> {
-        return authDataSource.validateToken(token)
-    }
+    suspend fun validateToken(token: String) = authDataSource.validateToken(token)
 
     fun token(): Flow<String?> {
         return authDataSource.token()

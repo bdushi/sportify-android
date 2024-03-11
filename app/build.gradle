@@ -82,6 +82,7 @@ dependencies {
     implementation libs.retrofit
     implementation libs.converter.gson
     implementation libs.logging
+    implementation libs.converter.scalars
 
     //
     implementation platform(libs.firebase.bom)

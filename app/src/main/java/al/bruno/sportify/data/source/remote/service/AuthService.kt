@@ -14,5 +14,5 @@ interface AuthService {
     suspend fun auth(@Field("username") username: String, @Field("password") password: String) : Response<ResponseBody>
 
     @GET("token/validate/{token}")
-    suspend fun validateToken(@Path("token") token: String) : Response<ResponseBody>
+    suspend fun validateToken(@Path("token") token: String) : String?
 }

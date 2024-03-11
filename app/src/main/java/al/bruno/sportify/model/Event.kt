@@ -1,10 +1,9 @@
 package al.bruno.sportify.model
 
-import java.time.LocalDateTime
-import java.util.UUID
+import java.time.OffsetDateTime
 
 data class Event(
-    val id: UUID,
+    val id: String,
     val title: String,
     val description: String,
     val price: Double,
@@ -15,9 +14,10 @@ data class Event(
     val province: String,
     val enabled: Boolean,
     val created: User,
-    val eventTypes: EventTypes,
-    val approved: Currency,
-    val createDate: LocalDateTime,
-    val startDate:LocalDateTime,
-    val endDate: LocalDateTime,
-    )
+    val eventType: EventType,
+    val currency: Currency,
+    val dateCreated: OffsetDateTime,
+    val lastUpdated: OffsetDateTime,
+    val startDate: OffsetDateTime,
+    val endDate: OffsetDateTime,
+)

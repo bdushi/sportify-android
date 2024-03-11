@@ -1,10 +1,8 @@
 package al.bruno.sportify.common
 
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
-object Util {
-    fun format(localDateTime: LocalDateTime): String {
-        return localDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy  HH:mm:ss"))
-    }
+fun format(offsetDateTime: OffsetDateTime): String {
+    return offsetDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy  HH:mm:ss"))
 }

@@ -1,11 +1,9 @@
 package al.bruno.sportify.model
 
-import java.time.LocalDateTime
 import java.time.OffsetDateTime
-import java.util.UUID
 
 class Currency(
-    val id: UUID,
+    val id: String,
     val currency: String,
     val symbol: String,
     val code: String,
