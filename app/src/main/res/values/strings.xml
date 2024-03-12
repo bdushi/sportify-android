@@ -5,7 +5,8 @@
     <string name="sign_in">SignIn</string>
     <string name="sign_in_title">SignIn</string>
     <string name="create_new_account">Create New Account</string>
-    <string name="add_leave">Add Leave</string>
+    <string name="new_event">New Event</string>
+    <string name="event_details">Event Details</string>
     <string name="save">Save</string>
     <string name="requested_by">Requested By</string>
     <string name="requested_date">Requested Date</string>
@@ -17,4 +18,14 @@
     <string name="approved">Approved</string>
     <string name="description">Description</string>
     <string name="comment">Comment</string>
+
+    <string name="name">Name</string>
+    <string name="alias">Alias</string>
+    <string name="phone_number">Phone Nummber</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="home">Home</string>
+    <string name="event">Event</string>
+    <string name="notification">Notification</string>
+    <string name="favourite">Favourite</string>
+    <string name="profile">Profile</string>
 </resources>

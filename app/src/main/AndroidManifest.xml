@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Compose"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="al.bruno.sportify.ui.MainActivity"
+            android:name="al.bruno.sportify.ui.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Compose.NoActionBar">
             <intent-filter>

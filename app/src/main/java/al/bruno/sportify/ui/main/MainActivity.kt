@@ -1,11 +1,9 @@
-package al.bruno.sportify.ui
+package al.bruno.sportify.ui.main
 
+import al.bruno.ivy.ui.theme.SportifyTheme
 import al.bruno.sportify.ui.authentication.AuthViewModel
 import al.bruno.sportify.ui.authentication.Authentication
-import al.bruno.sportify.ui.home.EventViewModel
-import android.content.IntentSender
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
@@ -18,9 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-
     private val authViewModel: AuthViewModel by viewModel()
-    private val eventViewModel: EventViewModel by viewModel()
     private val oneTapClient: SignInClient by lazy {
         Identity.getSignInClient(this)
     }
@@ -53,31 +49,33 @@ class MainActivity : ComponentActivity() {
         authViewModel.success.observe(this) {
             if (it) {
                 setContent {
-                    Sportify({
-
-                    }, eventViewModel, authViewModel)
+                    SportifyTheme() {
+                        MainScreen()
+                    }
                 }
             } else {
                 setContent {
-                    Authentication(authViewModel) {
-                        oneTapClient
-                            .getSignInIntent(request)
-                            .addOnSuccessListener { result ->
-                                handler.launch(
-                                    IntentSenderRequest.Builder(
-                                        result.intentSender
-                                    ).build()
-                                )
-                            }
-                            .addOnFailureListener { e ->
-                                Snackbar
-                                    .make(
-                                        findViewById(android.R.id.content),
-                                        "Google Sign-in failed ${e.message}",
-                                        Snackbar.LENGTH_SHORT
+                    SportifyTheme {
+                        Authentication(authViewModel) {
+                            oneTapClient
+                                .getSignInIntent(request)
+                                .addOnSuccessListener { result ->
+                                    handler.launch(
+                                        IntentSenderRequest.Builder(
+                                            result.intentSender
+                                        ).build()
                                     )
-                                    .show()
-                            }
+                                }
+                                .addOnFailureListener { e ->
+                                    Snackbar
+                                        .make(
+                                            findViewById(android.R.id.content),
+                                            "Google Sign-in failed ${e.message}",
+                                            Snackbar.LENGTH_SHORT
+                                        )
+                                        .show()
+                                }
+                        }
                     }
                 }
             }

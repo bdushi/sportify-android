@@ -1,4 +1,4 @@
-package al.bruno.sportify.ui.event
+package al.bruno.sportify.ui.event.create
 
 import androidx.lifecycle.ViewModel
 

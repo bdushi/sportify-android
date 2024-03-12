@@ -1,4 +1,4 @@
-package al.bruno.sportify.ui.home
+package al.bruno.sportify.ui.event.items
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text

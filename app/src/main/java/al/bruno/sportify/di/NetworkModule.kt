@@ -32,7 +32,7 @@ fun providerRetrofit(
     authInterceptor: AuthInterceptor
 ): Retrofit = Retrofit
     .Builder()
-    .baseUrl("http://192.168.1.4:8080/")
+    .baseUrl("http://192.168.1.29:8080/")
 //            .baseUrl(BuildConfig.HOST_NAME)
     .client(
         OkHttpClient.Builder()

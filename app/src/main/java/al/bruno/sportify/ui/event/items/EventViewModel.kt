@@ -1,4 +1,4 @@
-package al.bruno.sportify.ui.home
+package al.bruno.sportify.ui.event.items
 
 import android.util.Log
 import androidx.compose.runtime.getValue

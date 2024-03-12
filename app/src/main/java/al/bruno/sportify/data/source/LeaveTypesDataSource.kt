@@ -5,7 +5,7 @@ import al.bruno.sportify.data.source.remote.service.LeaveTypesService
 import al.bruno.sportify.model.EventType
 import retrofit2.Response
 
-class LeaveTypesDataSource constructor(private val leaveTypesService: LeaveTypesService) :
+class LeaveTypesDataSource(private val leaveTypesService: LeaveTypesService) :
     LeaveTypesRemoteDataSource {
     override suspend fun leaveType(): Response<List<EventType>> {
         return leaveTypesService.leaveTypes()

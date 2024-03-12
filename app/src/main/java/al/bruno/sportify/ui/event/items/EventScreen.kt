@@ -1,4 +1,4 @@
-package al.bruno.sportify.ui.home
+package al.bruno.sportify.ui.event.items
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,20 +12,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import al.bruno.sportify.model.Event
-import kotlinx.coroutines.flow.Flow
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LeavePagingListView(leaves: Flow<PagingData<Event>>) {
-    val leavesItems = leaves.collectAsLazyPagingItems()
+fun EventScreen(
+    onEventDetailsAction: () -> Unit,
+) {
+    val eventViewModel: EventViewModel = koinViewModel()
+    val leavesItems = eventViewModel.pagedLeaves.collectAsLazyPagingItems()
     LazyColumn {
         items(leavesItems.itemCount) { item ->
-            leavesItems[item]?.let { LeaveItem(event = it) }
+            leavesItems[item]?.let { EventItems(event = it, onEventDetailsAction = onEventDetailsAction) }
         }
         leavesItems.apply {
-            // modifier = Modifier.fillParentMaxSize()
             when {
                 loadState.refresh is LoadState.Loading -> {
                     item { LoadingView() }
