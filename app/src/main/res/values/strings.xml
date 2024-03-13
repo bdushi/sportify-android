@@ -23,6 +23,7 @@
     <string name="alias">Alias</string>
     <string name="phone_number">Phone Nummber</string>
     <string name="permission_denied">Permission Denied</string>
+    <string name="item">Item</string>
     <string name="home">Home</string>
     <string name="event">Event</string>
     <string name="notification">Notification</string>

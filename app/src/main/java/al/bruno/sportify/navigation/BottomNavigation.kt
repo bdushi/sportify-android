@@ -18,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun BottomNavigation(
     navController: NavController,
+    onNewEventAction: () -> Unit,
     bottomNavigationScreens: List<BottomNavigationScreen>
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -26,24 +27,27 @@ fun BottomNavigation(
         bottomNavigationScreens.forEach { screen ->
             BottomNavigationItem(
                 icon = { Icon(painter = painterResource(id = screen.icon), contentDescription = stringResource(id = screen.resourceId)) },
-                label = { Text(text = stringResource(id = screen.resourceId), fontSize = 8.sp) },
                 selectedContentColor = Color.Black,
                 unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {
-                    navController.navigate(screen.route) {
-                        // Pop up to the start destination of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                    if(screen.route == BottomNavigationScreen.Event.route) {
+                        onNewEventAction.invoke()
+                    } else {
+                        navController.navigate(screen.route) {
+                            // Pop up to the start destination of the graph to
+                            // avoid building up a large stack of destinations
+                            // on the back stack as users select items
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            // Avoid multiple copies of the same destination when
+                            // reselecting the same item
+                            launchSingleTop = true
+                            // Restore state when reselecting a previously selected item
+                            restoreState = true
                         }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
                     }
                 }
             )

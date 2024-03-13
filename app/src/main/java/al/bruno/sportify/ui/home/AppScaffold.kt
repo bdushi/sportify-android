@@ -13,19 +13,21 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(
+fun AppScaffold(
     onNewEventAction: () -> Unit,
-    onEventDetailsAction: () -> Unit
+    onEventDetailsAction: () -> Unit,
+    navController: NavHostController
 ) {
-    val navController = rememberNavController()
     val authViewModel: AuthViewModel = koinViewModel<AuthViewModel>()
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -42,18 +44,20 @@ fun HomeScreen(
                 }
             )
         },
+        scaffoldState = scaffoldState,
         bottomBar = {
             BottomNavigation(
                 navController = navController,
-                bottomNavigationScreens = bottomNavigationScreens
+                bottomNavigationScreens = bottomNavigationScreens,
+                onNewEventAction = onNewEventAction,
             )
         }
     ) {
         BottomNavigationGraph(
             navController = navController,
             modifier = Modifier.padding(it),
-            onNewEventAction = onNewEventAction,
             onEventDetailsAction = onEventDetailsAction
         )
     }
 }
+

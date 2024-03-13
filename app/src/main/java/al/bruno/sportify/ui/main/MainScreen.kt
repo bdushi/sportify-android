@@ -2,33 +2,35 @@ package al.bruno.sportify.ui.main
 
 import al.bruno.sportify.navigation.Actions
 import al.bruno.sportify.navigation.NavigationScreen
-import al.bruno.sportify.ui.authentication.AuthViewModel
 import al.bruno.sportify.ui.event.create.NewEventScreen
 import al.bruno.sportify.ui.event.details.EventDetails
-import al.bruno.sportify.ui.event.items.EventViewModel
-import al.bruno.sportify.ui.home.HomeScreen
-import androidx.compose.foundation.layout.padding
+import al.bruno.sportify.ui.home.AppScaffold
+import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import org.koin.androidx.compose.koinViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val navBarNavController = rememberNavController()
     val actions = remember(navController) { Actions(navController) }
+    Log.d("NavController", navController.currentBackStackEntryAsState().value.toString())
     NavHost(
         navController = navController,
-        startDestination = NavigationScreen.Main.route,
-        modifier = Modifier.padding(),
+        startDestination = NavigationScreen.Home.route
     ) {
-        composable(NavigationScreen.Main.route) {
-            HomeScreen(
+        composable(NavigationScreen.Home.route) {
+            AppScaffold(
                 actions.newEvent,
-                actions.eventDetails
+                actions.eventDetails,
+                navBarNavController
             )
         }
         composable(NavigationScreen.NewEvent.route) {
