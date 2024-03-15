@@ -1,7 +1,10 @@
 package al.bruno.sportify.model
 
+import al.bruno.sportify.interceptor.OffsetDateTimeSerializer
+import kotlinx.serialization.Serializable
 import java.time.OffsetDateTime
 
+@Serializable
 data class User(
     val id: String,
     val username: String,
@@ -15,6 +18,8 @@ data class User(
     val accountNonExpired: Boolean,
     val accountNonLocked: Boolean,
     val credentialsNonExpired: Boolean,
+    @Serializable(OffsetDateTimeSerializer::class)
     var dateCreated: OffsetDateTime,
+    @Serializable(OffsetDateTimeSerializer::class)
     var lastUpdated: OffsetDateTime
 )

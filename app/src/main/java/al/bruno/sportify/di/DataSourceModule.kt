@@ -12,7 +12,7 @@ val dataSource = module {
     single { AuthDataSource(get(), get()) }
     single { AuthRepository(get()) }
 
-    single { EventDataSource(get(), get()) }
+    single { EventDataSource(get()) }
     single { EventRepository(get()) }
 
     single { EventTypeDataSource(get()) }

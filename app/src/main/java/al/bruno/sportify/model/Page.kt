@@ -1,9 +1,11 @@
 package al.bruno.sportify.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Page(
-    @SerializedName("content")
+    @SerialName("content")
     val event: List<Event>,
     val pageable: Pageable,
     val totalPages: Int,

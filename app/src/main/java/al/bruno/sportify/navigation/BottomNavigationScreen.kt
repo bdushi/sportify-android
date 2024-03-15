@@ -1,14 +1,21 @@
 package al.bruno.sportify.navigation
 
-import androidx.annotation.StringRes
 import al.bruno.sportify.R
+import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.outlined.AddBox
+import androidx.compose.ui.graphics.vector.ImageVector
 
-sealed class BottomNavigationScreen(val route: String, @StringRes val resourceId: Int, val icon: Int) {
-    data object Item : BottomNavigationScreen("Home", R.string.item, R.drawable.ic_round_home_24)
-    data object Favourite : BottomNavigationScreen("Favourite", R.string.favourite, R.drawable.ic_round_favorite_24)
-    data object Event : BottomNavigationScreen("Event", R.string.event, R.drawable.ic_outline_add_box_24)
-    data object Notification : BottomNavigationScreen("Notification", R.string.notification, R.drawable.ic_round_notifications_24)
-    data object Profile : BottomNavigationScreen("Profile", R.string.profile, R.drawable.ic_round_account_circle_24)
+sealed class BottomNavigationScreen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
+    data object Item : BottomNavigationScreen("Home", R.string.item, Icons.Filled.Home)
+    data object Favourite : BottomNavigationScreen("Favourite", R.string.favourite, Icons.Filled.Favorite)
+    data object Event : BottomNavigationScreen("Event", R.string.event, Icons.Outlined.AddBox)
+    data object Notification : BottomNavigationScreen("Notification", R.string.notification, Icons.Filled.Notifications)
+    data object Profile : BottomNavigationScreen("Profile", R.string.profile, Icons.Filled.AccountCircle)
 }
 
 val bottomNavigationScreens = listOf(

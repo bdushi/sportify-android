@@ -26,7 +26,7 @@ fun BottomNavigation(
     BottomNavigation {
         bottomNavigationScreens.forEach { screen ->
             BottomNavigationItem(
-                icon = { Icon(painter = painterResource(id = screen.icon), contentDescription = stringResource(id = screen.resourceId)) },
+                icon = { Icon(imageVector = screen.icon, contentDescription = stringResource(id = screen.resourceId)) },
                 selectedContentColor = Color.Black,
                 unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,

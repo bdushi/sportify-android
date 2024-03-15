@@ -6,6 +6,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel<AuthViewModel> { AuthViewModel(get(), get(), get(), get()) }
-    viewModel<EventViewModel> { EventViewModel(get(), get(), get()) }
+    viewModel<AuthViewModel> { AuthViewModel(get(), get()) }
+    viewModel<EventViewModel> { EventViewModel(get(), get()) }
 }

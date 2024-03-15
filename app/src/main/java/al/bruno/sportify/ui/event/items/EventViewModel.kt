@@ -11,7 +11,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import al.bruno.sportify.data.source.EventRepository
 import al.bruno.sportify.data.source.LeaveTypesRepository
-import al.bruno.sportify.interceptor.ErrorHandler
 import al.bruno.sportify.model.Event
 import al.bruno.sportify.model.EventType
 import al.bruno.sportify.model.dto.LeaveDto
@@ -23,7 +22,6 @@ import java.lang.Exception
 class EventViewModel(
     private val eventRepository: EventRepository,
     private val leaveTypesRepository: LeaveTypesRepository,
-    private val errorHandler: ErrorHandler
 ): ViewModel() {
 
     var leaves: List<Event> by mutableStateOf(listOf())
@@ -46,38 +44,6 @@ class EventViewModel(
             try {
                 eventRepository.eventPage( 0, 10)?.let {
                     leaves = it.event
-                }
-            } catch (ex: Exception) {
-                Log.d(EventViewModel::class.java.name, ex.message.toString())
-            }
-        }
-    }
-
-    fun leaveTypes() {
-        viewModelScope.launch {
-            try {
-                val response = leaveTypesRepository.leaveTypes()
-                if(response.isSuccessful) {
-                    response.body()?.let {
-                        eventTypes = it
-                    }
-                } else {
-                    Log.d(EventViewModel::class.java.name, errorHandler.parseError(response).message.toString())
-                }
-            } catch (ex: Exception) {
-                Log.d(EventViewModel::class.java.name, ex.message.toString())
-            }
-        }
-    }
-
-    fun leave(leaveDto: LeaveDto) {
-        viewModelScope.launch {
-            try {
-                val response = eventRepository.leave(leaveDto)
-                if(response.isSuccessful) {
-                    Log.d(EventViewModel::class.java.name, errorHandler.parseError(response).message.toString())
-                } else {
-                    Log.d(EventViewModel::class.java.name, errorHandler.parseError(response).message.toString())
                 }
             } catch (ex: Exception) {
                 Log.d(EventViewModel::class.java.name, ex.message.toString())

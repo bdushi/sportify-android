@@ -2,7 +2,6 @@ package al.bruno.sportify.ui.home
 
 import al.bruno.sportify.R
 import al.bruno.sportify.navigation.BottomNavigation
-import al.bruno.sportify.navigation.BottomNavigationGraph
 import al.bruno.sportify.navigation.bottomNavigationScreens
 import al.bruno.sportify.ui.authentication.AuthViewModel
 import androidx.compose.foundation.layout.padding
