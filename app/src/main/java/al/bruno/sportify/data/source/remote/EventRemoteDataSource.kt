@@ -7,5 +7,6 @@ import retrofit2.Response
 
 interface EventRemoteDataSource {
     suspend fun eventPage(page: Int, size: Int): Page?
+    suspend fun events(page: Int, size: Int): Page?
     suspend fun leave(leaveDto: LeaveDto): Response<ResponseBody>
 }

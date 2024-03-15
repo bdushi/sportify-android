@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
     id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
     id 'com.google.protobuf' version '0.9.4'
@@ -21,11 +22,15 @@ android {
 
     buildTypes {
         debug {
+            debuggable true
             minifyEnabled false
-            multiDexEnabled = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -83,12 +88,18 @@ dependencies {
     implementation libs.converter.gson
     implementation libs.logging
     implementation libs.converter.scalars
-
+    // Ktor
+    implementation libs.ktor.client.core
+    implementation libs.ktor.client.cio
+    implementation libs.ktor.client.auth
+    implementation libs.ktor.client.content.negotiation
+    implementation libs.ktor.serialization.gson
+    implementation libs.kotlinx.serialization.json
     //
     implementation platform(libs.firebase.bom)
     implementation libs.analytics
 
-    // koin
+    // Koin
     implementation platform(libs.koin.bom)
     implementation libs.koin.android
     implementation libs.koin.compose

@@ -8,6 +8,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import io.ktor.client.plugins.auth.providers.BearerTokens
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import okhttp3.ResponseBody
@@ -25,9 +26,7 @@ class AuthDataSource(
     override suspend fun validateToken(token: String) = authService.validateToken(token)
 
     override fun token(): Flow<String?> {
-        return dataStore.data.map {
-            it[stringPreferencesKey(TOKEN)]
-        }
+        return dataStore.data.map { it[stringPreferencesKey(TOKEN)] }
     }
 
     override suspend fun token(token: String) {

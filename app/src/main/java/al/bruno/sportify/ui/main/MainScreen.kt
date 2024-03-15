@@ -21,7 +21,6 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBarNavController = rememberNavController()
     val actions = remember(navController) { Actions(navController) }
-    Log.d("NavController", navController.currentBackStackEntryAsState().value.toString())
     NavHost(
         navController = navController,
         startDestination = NavigationScreen.Home.route

@@ -7,7 +7,7 @@ import retrofit2.Response
 
 class EventRepository(private val eventDataSource: EventDataSource) {
     suspend fun eventPage( page: Int, size: Int) : Page? {
-        return eventDataSource.eventPage(page = page, size = size)
+        return eventDataSource.events(page = page, size = size)
 
     }
 

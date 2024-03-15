@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import al.bruno.sportify.data.source.AuthRepository
 import al.bruno.sportify.interceptor.AuthInterceptor
 import al.bruno.sportify.interceptor.ErrorHandler
+import al.bruno.sportify.interceptor.Token
+import io.ktor.client.plugins.auth.providers.BearerTokens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +18,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val authInterceptor: AuthInterceptor,
-    private val errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val token: Token
 ) : ViewModel() {
 
     private val _success = MutableLiveData<Boolean>()
@@ -33,6 +36,7 @@ class AuthViewModel @Inject constructor(
             authRepository.token().collect {
                 _success.value = !it.isNullOrEmpty()
                 authInterceptor.token = it
+                token.token = it ?: ""
             }
         }
     }

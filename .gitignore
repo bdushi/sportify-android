@@ -1,6 +1,8 @@
 *.iml
 .gradle
-/local.properties
+local.properties
+debug.properties
+release.properties
 /.idea/
 /debug/
 /release/
@@ -9,8 +11,6 @@
 .DS_Store
 .externalNativeBuild
 .cxx
-release.properties
-debug.properties
 debug.jks
 release.jks
 /app/debug/
