@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -6,6 +8,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.protobuf' version '0.9.4'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.apollographql.apollo3' version '4.0.0-beta.6'
 }
 
 android {
@@ -52,6 +55,12 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    kotlin {
+        compilerOptions {
+            languageVersion.set(KotlinVersion.KOTLIN_1_9)
+            apiVersion.set(KotlinVersion.KOTLIN_1_9)
+        }
+    }
 
     kotlinOptions {
         jvmTarget = "17"
@@ -80,6 +89,11 @@ dependencies {
     implementation libs.preference.datastore
     implementation libs.protobuf
 
+    // Credentials
+    implementation libs.credentials
+    implementation libs.credentials.play.services.auth
+    implementation libs.googleid
+
     // Ktor
     implementation libs.ktor.client.core
     implementation libs.ktor.client.cio
@@ -88,11 +102,11 @@ dependencies {
     implementation libs.ktor.client.logging
     implementation libs.ktor.client.serialization
     implementation libs.kotlinx.serialization.json
+    implementation libs.apollo.runtime
 
     // Firebase & PlayService
     implementation platform(libs.firebase.bom)
     implementation libs.analytics
-    implementation libs.play.services.auth
 
     // Koin
     implementation platform(libs.koin.bom)
@@ -100,9 +114,18 @@ dependencies {
     implementation libs.koin.compose
     implementation libs.glide
 
+    implementation project(':foundation')
+
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.espresso.core
+}
+
+apollo {
+    generateKotlinModels.set(true)
+    service("service") {
+        packageName = "al.bruno.sportify"
+    }
 }
 
 protobuf {

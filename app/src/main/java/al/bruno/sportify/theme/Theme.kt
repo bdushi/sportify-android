@@ -1,4 +1,4 @@
-package al.bruno.ivy.ui.theme
+package al.bruno.sportify.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

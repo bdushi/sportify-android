@@ -1,47 +1,75 @@
 package al.bruno.sportify.ui.main
 
-import al.bruno.ivy.ui.theme.SportifyTheme
+import al.bruno.sportify.BuildConfig.GOOGLE_CLIENT_ID
+import al.bruno.sportify.theme.SportifyTheme
 import al.bruno.sportify.ui.authentication.AuthViewModel
 import al.bruno.sportify.ui.authentication.Authentication
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.ExperimentalMaterial3Api
-import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.material.snackbar.Snackbar
-import io.ktor.client.plugins.auth.providers.BearerTokens
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialRequest.Builder
+import androidx.credentials.exceptions.GetCredentialException
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-    private val authViewModel: AuthViewModel by viewModel()
-    private val oneTapClient: SignInClient by lazy {
-        Identity.getSignInClient(this)
-    }
-    private val request: GetSignInIntentRequest by lazy {
-        GetSignInIntentRequest.builder()
-            .setServerClientId("651311705711-4ef9uig8ie1kh6jpfl01dedhi884b55h.apps.googleusercontent.com")
-            .build()
-    }
 
-    private val handler =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            try {
-                val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
-                credential.googleIdToken?.let { it1 -> authViewModel.validateToken(it1) }
-            } catch (ex: Exception) {
-                Snackbar
-                    .make(
-                        findViewById(android.R.id.content),
-                        "Error ${ex.message} ${ex.cause}",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    .show()
+    private val credentialManager: CredentialManager = CredentialManager.create(this)
+    private val authViewModel: AuthViewModel by viewModel()
+    private val scope = CoroutineScope(Job() + Dispatchers.IO)
+
+    /**
+     * @link https://developer.android.com/training/sign-in/credential-manager
+     */
+    private val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+        .setFilterByAuthorizedAccounts(false)
+        .setServerClientId(GOOGLE_CLIENT_ID)
+        .build()
+
+    private var request: GetCredentialRequest = Builder()
+        .addCredentialOption(googleIdOption)
+        .build()
+
+    private suspend fun auth() {
+        val result = credentialManager.getCredential(
+            request = request,
+            context = this,
+        )
+        try {
+            when (val credential = result.credential) {
+                is CustomCredential -> {
+                    if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                        try {
+                            val googleIdTokenCredential =
+                                GoogleIdTokenCredential.createFrom(credential.data)
+                            authViewModel.validateToken(googleIdTokenCredential.idToken)
+                        } catch (e: GoogleIdTokenParsingException) {
+                            Log.e(TAG, "Received an invalid google id token response", e)
+                        }
+                    } else {
+                        Log.e(TAG, "Unexpected type of credential")
+                    }
+                }
+                else -> {
+                    Log.e(TAG, "Unexpected type of credential")
+                }
             }
+
+        } catch (e: GetCredentialException) {
+            Log.e(TAG, e.message.toString())
         }
+    }
 
     @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +78,7 @@ class MainActivity : ComponentActivity() {
         authViewModel.success.observe(this) {
             if (it) {
                 setContent {
-                    SportifyTheme() {
+                    SportifyTheme {
                         MainScreen()
                     }
                 }
@@ -58,24 +86,9 @@ class MainActivity : ComponentActivity() {
                 setContent {
                     SportifyTheme {
                         Authentication(authViewModel) {
-                            oneTapClient
-                                .getSignInIntent(request)
-                                .addOnSuccessListener { result ->
-                                    handler.launch(
-                                        IntentSenderRequest.Builder(
-                                            result.intentSender
-                                        ).build()
-                                    )
-                                }
-                                .addOnFailureListener { e ->
-                                    Snackbar
-                                        .make(
-                                            findViewById(android.R.id.content),
-                                            "Google Sign-in failed ${e.message}",
-                                            Snackbar.LENGTH_SHORT
-                                        )
-                                        .show()
-                                }
+                            scope.launch {
+                                auth()
+                            }
                         }
                     }
                 }
@@ -83,3 +96,5 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+const val TAG = "SPORTIFY_AUTH"

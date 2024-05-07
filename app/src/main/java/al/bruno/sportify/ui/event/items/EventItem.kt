@@ -1,6 +1,6 @@
 package al.bruno.sportify.ui.event.items
 
-import al.bruno.sportify.model.Event
+import al.bruno.sportify.ui.domain.Event
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card

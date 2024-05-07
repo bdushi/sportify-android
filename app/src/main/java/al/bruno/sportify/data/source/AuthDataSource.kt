@@ -20,18 +20,19 @@ import kotlinx.coroutines.flow.map
 class AuthDataSource(
     private val dataStore: DataStore<Preferences>, private val httpClient: HttpClient
 ) : AuthRemoteDataSource, AuthLocalDataSource {
-    override suspend fun auth(username: String, password: String) = httpClient.post {
-        setBody(
-            FormDataContent(Parameters.build {
-                append("username", username)
-                append("password", password)
-            })
-        )
-    }.body<String?>()
+    override suspend fun auth(username: String, password: String) =
+        httpClient.post("/login") {
+            setBody(
+                FormDataContent(Parameters.build {
+                    append("username", username)
+                    append("password", password)
+                })
+            )
+        }.body<String?>()
 
 
     override suspend fun validateToken(token: String) =
-        httpClient.get("http://192.168.1.5:8080/token/validate/${token}").body<String?>()
+        httpClient.get("/token/validate/${token}").body<String?>()
 
     override fun token(): Flow<String?> {
         return dataStore.data.map { it[stringPreferencesKey(TOKEN)] }

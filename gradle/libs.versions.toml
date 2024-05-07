@@ -1,38 +1,44 @@
 [versions]
-agp = "8.3.0"
+agp = "8.3.2"
 glide = "1.0.0-beta01"
 kotlin = "1.9.22"
 google-secrets = "2.0.1"
 google-services = "4.4.1"
-crashlytics = "2.9.9"
+crashlytics = "3.0.0"
 kotlinx-serialization-json = "1.6.3"
 perf = "1.4.2"
-play-services-auth = "21.0.0"
-protobuf = "3.25.3"
+protobuf = "4.26.1"
 safeargs = "2.7.7"
 ksp = "1.9.23-1.0.19"
 
-activity-compose = "1.9.0-alpha03"
-core-ktx = "1.13.0-alpha05"
+activity-compose = "1.9.0"
+core-ktx = "1.13.1"
+viewmodel = "2.8.0-rc01"
 lifecycle = "2.7.0"
-compose-bom = "2024.02.02"
-firebase-bom = "32.7.4"
-navigation = "2.8.0-alpha04"
+compose-bom = "2024.05.00"
+firebase-bom = "33.0.0"
+navigation = "2.8.0-alpha08"
 ktor = "3.0.0-beta-1"
-koin = "3.5.1"
-datastore = "1.1.0-beta02"
-paging-compose = "3.3.0-alpha04"
+apollo-runtime = "4.0.0-beta.6"
+koin = "3.5.6"
+datastore = "1.1.1"
+paging-compose = "3.3.0-rc01"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
+appcompat = "1.6.1"
+material = "1.12.0"
+credentials = "1.3.0-alpha03"
+googleid = "1.1.0"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+apollo-runtime = { module = "com.apollographql.apollo3:apollo-runtime", version.ref = "apollo-runtime" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "viewmodel" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -74,6 +80,12 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
+credentials-play-services-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 
 
 [plugins]
@@ -87,6 +99,7 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "perf" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "safeargs" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [bundles]
 

@@ -15,7 +15,7 @@
     <string name="leave_type">Leave Type</string>
     <string name="leave_description">Leave Description</string>
     <string name="leave_comment">Leave Comment</string>
-    <string name="approved">Approved</string>
+    <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="comment">Comment</string>
 
@@ -29,4 +29,6 @@
     <string name="notification">Notification</string>
     <string name="favourite">Favourite</string>
     <string name="profile">Profile</string>
+    <string name="search_label">Search</string>
+    <string name="asset_statements" translatable="false">[{\"include\": \"https://192.168.1.27:8080/.well-known/assetlinks.json\"}]</string>
 </resources>

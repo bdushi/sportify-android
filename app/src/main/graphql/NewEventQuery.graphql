@@ -1,0 +1,48 @@
+query GetAllReferences {
+    cities {
+        id
+        city
+        zipCode
+        country {
+            id
+            country
+            countryCode
+            enabled
+            dateCreated
+            lastUpdated
+        }
+        enabled
+        dateCreated
+        lastUpdated
+    }
+
+    currencies {
+        id
+        currency
+        code
+        symbol
+        decimalMark
+        enabled
+        dateCreated
+        lastUpdated
+    }
+
+    difficulties {
+        id,
+        code
+        level,
+        description,
+        enabled,
+        dateCreated
+        lastUpdated
+    }
+    eventTypes {
+        id
+        code
+        name
+        description
+        enabled
+        dateCreated
+        lastUpdated
+    }
+}

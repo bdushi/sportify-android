@@ -1,0 +1,149 @@
+type Query {
+  users: [User]
+  user(id: ID): User
+  events(first: Int, last: Int, before: String, after: String): EventsConnection
+  event(id: ID): Events
+  cities : [City]!
+  currencies : [Currency]!
+  difficulties : [Difficulty]!
+  eventTypes : [EventType]!
+}
+
+type Authority {
+  id: ID!
+  authority: String!
+  description: String!
+  enabled: Boolean!
+  dateCreated: String!
+  lastUpdated: String!
+}
+
+type Events {
+  id: ID!
+  title: String!
+  description: String!
+  dateCreated: String!
+  lastUpdated: String!
+  startedDate: String!
+  endedDate: String!
+  price: Float!
+  latitude: Float!
+  longitude: Float!
+  address: String!
+  street: String!
+  province: String!
+  enabled: Boolean!
+  username: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  city: String!
+  zipCode: String!
+  country: String!
+  countryCode: String!
+  currency: String!
+  symbol: String!
+  currencyCode: String!
+  decimalMark: String!
+  difficultyCode: String!
+  difficultyDescription: String!
+  eventTypeCode: String!
+  eventTypeName: String!
+  eventTypeDescription: String!
+  participantsIds: [String!]
+}
+
+type EventsConnection {
+  edges: [EventsEdge]!
+  pageInfo: PageInfo!
+}
+
+type EventsEdge {
+  cursor: String!
+  node: Events!
+}
+
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Participant {
+  id: ID!
+  interested: Boolean!
+  confirmed: Boolean!
+  participant: User
+  dateCreated: String
+  lastUpdated: String
+}
+
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  address: String!
+  phone: String!
+  authorities: [Authority!]!
+  enabled: Boolean!
+  accountNonExpired: Boolean!
+  accountNonLocked: Boolean!
+  credentialsNonExpired: Boolean!
+  dateCreated: String!
+  lastUpdated: String!
+}
+
+type City {
+  id: ID!
+  city: String!
+  zipCode: String!
+  country: Country!
+  enabled: Boolean!
+  dateCreated: String!
+  lastUpdated: String!
+}
+
+type Country {
+  id: ID!
+  country: String!
+  countryCode: String!
+  cities: [City!]!
+  enabled: Boolean!
+  dateCreated: String!
+  lastUpdated: String!
+}
+
+type Currency {
+  id: ID!
+  currency: String!
+  symbol: String!
+  code: String!
+  decimalMark: String!
+  enabled: Boolean!
+  dateCreated: String!
+  lastUpdated: String!
+}
+
+type Difficulty {
+  id: ID!
+  code: String!
+  level: String!
+  description: String!
+  enabled: Boolean!
+  dateCreated: String!
+  lastUpdated: String!
+}
+
+type EventType {
+  id: ID!
+  code: String!
+  name: String!
+  description: String!
+  enabled: Boolean!
+  dateCreated: String!
+  lastUpdated: String!
+}

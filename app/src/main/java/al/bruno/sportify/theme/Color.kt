@@ -1,11 +1,12 @@
-package al.bruno.ivy.ui.theme
+package al.bruno.sportify.theme
 
 import androidx.compose.ui.graphics.Color
 
-val md_theme_light_primary = Color(0xFF00696E)
+val md_theme_light_primary = Color(0xFF455A64)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
-val md_theme_light_primaryContainer = Color(0xFF6FF6FE)
-val md_theme_light_onPrimaryContainer = Color(0xFF002022)
+val md_theme_light_primaryContainer = Color(0xFFFFCF33)
+val md_theme_light_onPrimaryContainer = Color(0xFF263238)
+
 val md_theme_light_secondary = Color(0xFF4A6364)
 val md_theme_light_onSecondary = Color(0xFFFFFFFF)
 val md_theme_light_secondaryContainer = Color(0xFFCCE8E9)

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Compose"
         android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
         <activity
             android:name="al.bruno.sportify.ui.main.MainActivity"
             android:exported="true"

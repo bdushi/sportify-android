@@ -1,6 +1,12 @@
 package al.bruno.sportify.di
 
+import al.bruno.sportify.BuildConfig
 import al.bruno.sportify.interceptor.Token
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.http.HttpRequest
+import com.apollographql.apollo3.api.http.HttpResponse
+import com.apollographql.apollo3.network.http.HttpInterceptor
+import com.apollographql.apollo3.network.http.HttpInterceptorChain
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -18,7 +24,22 @@ import org.koin.dsl.module
 val networkModule = module {
     single<Token> { Token("") }
     single<HttpClient> { ktorHttpClient(get()) }
+    single<ApolloClient> { apolloClient(get()) }
 }
+
+fun apolloClient(token: Token) = ApolloClient.Builder()
+    .addHttpInterceptor(object : HttpInterceptor {
+        override suspend fun intercept(
+            request: HttpRequest,
+            chain: HttpInterceptorChain
+        ): HttpResponse {
+            return chain.proceed(
+                request.newBuilder().addHeader("Authorization", token.token).build()
+            )
+        }
+    })
+    .serverUrl("${BuildConfig.HOST_NAME}/graphql")
+    .build()
 
 fun ktorHttpClient(token: Token) = HttpClient(CIO) {
     defaultRequest {
@@ -26,14 +47,16 @@ fun ktorHttpClient(token: Token) = HttpClient(CIO) {
             this["Authorization"] = token.token
         }
         url {
-            port = 8080
-            host = "192.168.1.5"
+            port = BuildConfig.PORT.toInt()
+            host = BuildConfig.HOST
             protocol = URLProtocol.HTTP
         }
     }
     install(Logging) {
         level = LogLevel.BODY
         logger = Logger.ANDROID
+
+
     }
     install(ContentNegotiation) {
         json(Json {

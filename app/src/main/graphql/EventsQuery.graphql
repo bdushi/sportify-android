@@ -1,0 +1,47 @@
+query EventQuery($first: Int!, $after: String) {
+    events(first: $first, after: $after) {
+        edges {
+            cursor
+            node {
+                id
+                title
+                description
+                dateCreated
+                lastUpdated
+                startedDate
+                endedDate
+                price
+                latitude
+                longitude
+                address
+                street
+                province
+                enabled
+                username
+                email
+                firstName
+                lastName
+                city
+                zipCode
+                country
+                countryCode
+                currency
+                symbol
+                currencyCode
+                decimalMark
+                difficultyCode
+                difficultyDescription
+                eventTypeCode
+                eventTypeName
+                eventTypeDescription
+                participantsIds
+            }
+        }
+        pageInfo {
+            hasPreviousPage
+            hasNextPage
+            startCursor
+            endCursor
+        }
+    }
+}
