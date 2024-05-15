@@ -3,7 +3,7 @@
 local.properties
 debug.properties
 release.properties
-/.idea/
+/.idea/**
 /debug/
 /release/
 /build/

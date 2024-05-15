@@ -18,11 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Authentication(
-    authViewModel: AuthViewModel,
     signInWithGoogle: () -> Unit
 ) {
     MaterialTheme {
@@ -35,7 +35,7 @@ fun Authentication(
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = "Sportify", textAlign = TextAlign.Center, fontSize = 48.sp)
-            SignIn(authViewModel = authViewModel)
+            SignIn()
             SignInButton(
                 text = "Sign in with Google",
                 loadingText = "Signing in...",

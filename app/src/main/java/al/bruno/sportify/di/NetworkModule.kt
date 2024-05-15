@@ -27,6 +27,12 @@ val networkModule = module {
     single<ApolloClient> { apolloClient(get()) }
 }
 
+//fun logging(): HttpLoggingInterceptor {
+//    val logging = HttpLoggingInterceptor()
+//    logging.level = HttpLoggingInterceptor.Level.BODY
+//    return logging
+//}
+
 fun apolloClient(token: Token) = ApolloClient.Builder()
     .addHttpInterceptor(object : HttpInterceptor {
         override suspend fun intercept(

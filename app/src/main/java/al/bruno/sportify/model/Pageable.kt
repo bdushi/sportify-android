@@ -9,5 +9,5 @@ data class Pageable(
     val pageSize: Int,
     val offset: Int,
     val paged: Boolean,
-    val unpaged: Boolean,
+    val unPaged: Boolean,
 )

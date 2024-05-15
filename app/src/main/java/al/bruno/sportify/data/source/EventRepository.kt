@@ -1,6 +1,6 @@
 package al.bruno.sportify.data.source
 
-import al.bruno.sportify.EventQuery
+import al.bruno.sportify.ui.domain.CursorEvent
 import al.bruno.sportify.model.Page
 
 class EventRepository(private val eventDataSource: EventDataSource) {
@@ -8,7 +8,7 @@ class EventRepository(private val eventDataSource: EventDataSource) {
         return eventDataSource.events(page = page, size = size)
     }
 
-    suspend fun events(first: Int, after: String?): EventQuery.Data? {
+    suspend fun events(first: Int, after: String?): CursorEvent {
         return eventDataSource.events(first, after)
     }
 }

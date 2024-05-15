@@ -1,8 +1,10 @@
 package al.bruno.sportify.data.source
 
 import al.bruno.sportify.EventQuery
+import al.bruno.sportify.data.source.mapper.mapToCursorEvent
 import al.bruno.sportify.data.source.remote.EventRemoteDataSource
 import al.bruno.sportify.model.Page
+import al.bruno.sportify.ui.domain.CursorEvent
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import io.ktor.client.HttpClient
@@ -18,10 +20,16 @@ class EventDataSource(
         url("event?page=${page}&size=${size}")
     }.body<Page?>()
 
-    override suspend fun events(first: Int, after: String?): EventQuery.Data? {
+    override suspend fun events(first: Int, after: String?): CursorEvent {
         return apolloClient
-            .query(EventQuery(first, Optional.presentIfNotNull(after)))
+            .query(
+                EventQuery(
+                    first,
+                    Optional.presentIfNotNull(after)
+                )
+            )
             .execute()
             .data
+            .mapToCursorEvent()
     }
 }

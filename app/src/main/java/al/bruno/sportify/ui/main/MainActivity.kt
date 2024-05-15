@@ -17,9 +17,11 @@ import androidx.credentials.exceptions.GetCredentialException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,13 +29,13 @@ class MainActivity : ComponentActivity() {
 
     private val credentialManager: CredentialManager = CredentialManager.create(this)
     private val authViewModel: AuthViewModel by viewModel()
-    private val scope = CoroutineScope(Job() + Dispatchers.IO)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     /**
      * @link https://developer.android.com/training/sign-in/credential-manager
      */
     private val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-        .setFilterByAuthorizedAccounts(false)
+        .setFilterByAuthorizedAccounts(true)
         .setServerClientId(GOOGLE_CLIENT_ID)
         .build()
 
@@ -55,18 +57,46 @@ class MainActivity : ComponentActivity() {
                                 GoogleIdTokenCredential.createFrom(credential.data)
                             authViewModel.validateToken(googleIdTokenCredential.idToken)
                         } catch (e: GoogleIdTokenParsingException) {
+                            Snackbar
+                                .make(
+                                    findViewById(android.R.id.content),
+                                    "Invalid google authentication",
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                .show()
                             Log.e(TAG, "Received an invalid google id token response", e)
                         }
                     } else {
+                        Snackbar
+                            .make(
+                                findViewById(android.R.id.content),
+                                "Credential are not correct",
+                                Snackbar.LENGTH_SHORT
+                            )
+                            .show()
                         Log.e(TAG, "Unexpected type of credential")
                     }
                 }
                 else -> {
+                    Snackbar
+                        .make(
+                            findViewById(android.R.id.content),
+                            "Credential are not correct",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        .show()
                     Log.e(TAG, "Unexpected type of credential")
                 }
             }
 
         } catch (e: GetCredentialException) {
+            Snackbar
+                .make(
+                    findViewById(android.R.id.content),
+                    "Credential are not correct",
+                    Snackbar.LENGTH_SHORT
+                )
+                .show()
             Log.e(TAG, e.message.toString())
         }
     }
@@ -85,7 +115,7 @@ class MainActivity : ComponentActivity() {
             } else {
                 setContent {
                     SportifyTheme {
-                        Authentication(authViewModel) {
+                        Authentication {
                             scope.launch {
                                 auth()
                             }
